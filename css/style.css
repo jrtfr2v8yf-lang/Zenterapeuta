@@ -1,0 +1,249 @@
+:root {
+    --primary-dark: #2d6a4f;
+    --primary-medium: #52b788;
+    --primary-light: #95d5b2;
+    --primary-very-light: #d8f3dc;
+    --bg-beige: #f5ebe0;
+    --bg-light: #e9ecef;
+    --text-dark: #1a1a2e;
+    --text-light: #f8f9fa;
+    --white: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+}
+
+[data-theme="dark"] {
+    --primary-dark: #95d5b2;
+    --primary-medium: #52b788;
+    --primary-light: #2d6a4f;
+    --bg-beige: #1a1a2e;
+    --bg-light: #16213e;
+    --text-dark: #e0e0e0;
+    --white: #1f4068;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-beige);
+    color: var(--text-dark);
+    transition: background-color 0.3s, color 0.3s;
+    line-height: 1.6;
+    padding-bottom: 70px; /* Space for bottom nav */
+}
+
+header {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.branding h1 {
+    font-size: 1.1rem;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 0.75rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+main {
+    padding: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Navigation */
+#bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--white);
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5rem 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.nav-item {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-dark);
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    cursor: pointer;
+    flex: 1;
+}
+
+.nav-item.active {
+    opacity: 1;
+    color: var(--primary-dark);
+}
+
+.nav-item .icon {
+    font-size: 1.2rem;
+}
+
+.nav-item .label {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Common UI Elements */
+.card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background-color: var(--primary-dark);
+    color: var(--white);
+}
+
+.btn-secondary {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+}
+
+.btn-whatsapp {
+    background-color: #25d366;
+    color: white;
+    width: 100%;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+/* Canvas for Signature */
+.canvas-container {
+    border: 2px dashed var(--primary-medium);
+    border-radius: 8px;
+    margin: 1rem 0;
+    background-color: #fff;
+}
+
+canvas {
+    width: 100%;
+    height: 200px;
+    touch-action: none;
+}
+
+/* Tables / Lists */
+.client-list {
+    list-style: none;
+}
+
+.client-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--bg-light);
+}
+
+.client-info h3 {
+    margin-bottom: 0.25rem;
+}
+
+.client-info p {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* Responsive Grid */
+@media (min-width: 768px) {
+    #bottom-nav {
+        width: 250px;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 2rem;
+        left: 0;
+        top: 0;
+    }
+
+    body {
+        padding-bottom: 0;
+        padding-left: 250px;
+    }
+
+    .nav-item {
+        flex: 0 0 auto;
+        padding: 1rem;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .nav-item .icon {
+        font-size: 1.5rem;
+    }
+
+    .nav-item .label {
+        font-size: 1rem;
+    }
+}
