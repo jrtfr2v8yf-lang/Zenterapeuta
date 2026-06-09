@@ -169,17 +169,18 @@ export const Consentimientos = {
                         <input type="number" id="prenatal-weeks" placeholder="Ej: 24" style="width: 100px;">
                     </div>
                     <div class="form-group">
-                        <label style="font-weight: normal; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <input type="checkbox" id="prenatal-auth"> Adjunto autorización médica (si embarazo de alto riesgo)
+                        <label style="font-weight: normal; font-size: 0.95rem; display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.4;">
+                            <input type="checkbox" id="prenatal-auth" style="flex-shrink: 0; margin-top: 0.2rem; width: 1.1rem; height: 1.1rem; accent-color: #2d6a4f;"> <span style="flex: 1;">Adjunto autorización médica (si embarazo de alto riesgo)</span>
                         </label>
                     </div>
                 ` : ''}
 
                 <h4 style="margin: 1.5rem 0 0.5rem;">Contraindicaciones (marque si presenta alguna):</h4>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                <div id="contra-grid" style="display: flex; flex-direction: column; gap: 0.5rem;">
                     ${CONTRAINDICACIONES.map(c => `
-                        <label style="font-weight: normal; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <input type="checkbox" name="contra" value="${c}"> ${c}
+                        <label style="font-weight: normal; font-size: 0.95rem; display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.4; padding: 0.25rem 0;">
+                            <input type="checkbox" name="contra" value="${c}" style="flex-shrink: 0; margin-top: 0.2rem; width: 1.1rem; height: 1.1rem; accent-color: #2d6a4f;">
+                            <span style="flex: 1; word-break: break-word;">${c}</span>
                         </label>
                     `).join('')}
                 </div>
