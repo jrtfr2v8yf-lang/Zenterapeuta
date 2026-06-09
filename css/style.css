@@ -154,8 +154,23 @@ main {
     background-color: #25d366;
     color: white;
     width: 100%;
-    font-size: 1.1rem;
-    margin-top: 1rem;
+    font-size: 1.3rem;
+    padding: 1.2rem 1.5rem;
+    margin-top: 1.5rem;
+    border-radius: 16px;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.5px;
+}
+
+.btn-whatsapp:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp:hover {
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
 }
 
 /* Forms */

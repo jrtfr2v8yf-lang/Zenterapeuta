@@ -106,8 +106,8 @@ export const Consentimientos = {
                 <button class="btn btn-secondary btn-sm" id="btn-clear-sig">Limpiar Firma</button>
 
                 <div style="margin-top: 2rem;">
-                    <button class="btn btn-primary" id="btn-save-consent" style="width: 100%;">Guardar Consentimiento</button>
-                    <button class="btn btn-whatsapp" id="btn-whatsapp-consent">📱 Enviar por WhatsApp</button>
+                    <button class="btn btn-primary" id="btn-save-consent" style="width: 100%;">💾 Guardar Consentimiento</button>
+                    <button class="btn btn-whatsapp" id="btn-whatsapp-consent">📱 Enviar Consentimiento por WhatsApp</button>
                 </div>
             </div>
         `;
