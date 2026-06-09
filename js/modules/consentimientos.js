@@ -208,27 +208,33 @@ export const Consentimientos = {
             const contraText = contraindicaciones.length > 0 
                 ? `Contraindicaciones marcadas: ${contraindicaciones.join(', ')}.` 
                 : 'Sin contraindicaciones marcadas.';
+
+            const telefonoLimpio = client.telefono.replace(/\D/g, '');
             
-            const message = `*Giacinto Schiavone — Master LMT*\n` +
-                `*Consentimiento Informado*\n\n` +
-                `*Cliente:* ${client.nombre}\n` +
-                `*Teléfono:* ${client.telefono}\n` +
-                `*Tipo:* ${type}\n` +
-                `*Fecha:* ${date}\n` +
-                `${extraInfo ? `*Info:* ${extraInfo}\n` : ''}\n` +
-                `*Declaración:* ${this.textos[type]}\n\n` +
-                `*${contraText}*\n\n` +
-                `Firmado digitalmente por ${client.nombre} el ${date}.\n\n` +
+            const message = `Hola ${client.nombre}, soy Giacinto Schiavone — Master LMT.\n\n` +
+                `Te envío el *Consentimiento Informado* para tu próxima sesión de *${type}*.\n\n` +
+                `📋 *Detalles:*\n` +
+                `• Tipo: ${type}\n` +
+                `• Fecha propuesta: ${date}\n` +
+                `${extraInfo ? `• ${extraInfo}\n` : ''}` +
+                `• ${contraText}\n\n` +
+                `📄 *Declaración:*\n${this.textos[type]}\n\n` +
+                `✍️ *Importante:* Por favor, firma digitalmente este consentimiento y devuélvemelo firmado.\n` +
+                `   Si son varios miembros de tu familia, reenvíales este mensaje para que cada uno\n` +
+                `   dé su propio consentimiento.\n\n` +
+                `📱 Una vez firmado, responde este mensaje o contáctame al ${config.whatsapp || config.email || 'mi número'}.\n\n` +
+                `_Giacinto Schiavone — Master LMT_\n` +
                 `_Terapias Corporales Ayurveda & Yoga_\n` +
-                `Contacto: ${config.email || '—'}`;
+                `${config.email ? `_${config.email}_` : ''}`;
 
             const encodedMsg = encodeURIComponent(message);
-            const waUrl = `https://wa.me/${config.whatsapp.replace(/\D/g, '')}?text=${encodedMsg}`;
+            // Enviar al número del cliente (no al terapeuta)
+            const waUrl = `https://wa.me/${telefonoLimpio}?text=${encodedMsg}`;
             window.open(waUrl, '_blank');
         }
 
         const msg = sendWhatsApp 
-            ? '✅ Consentimiento guardado y enviado por WhatsApp. El cliente ha sido registrado en el directorio.'
+            ? '✅ Consentimiento guardado. Se abrirá WhatsApp para que envíes el mensaje al cliente. ¡Pídele que lo reenvíe a su familia si son varios!'
             : '✅ Consentimiento guardado exitosamente.';
         alert(msg);
         this.render(this.container);
