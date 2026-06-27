@@ -1,49 +1,733 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giacinto Schiavone — Master LMT</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuestionario de Bienestar · Masajes en Texas</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #f7f3ee 0%, #e8e0d8 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+
+    .app-container {
+      max-width: 720px;
+      width: 100%;
+      background: rgba(255, 250, 245, 0.85);
+      backdrop-filter: blur(4px);
+      border-radius: 48px 48px 32px 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.05);
+      padding: 28px 24px 32px;
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 235, 220, 0.5);
+    }
+
+
+    /* encabezado profesional */
+    .header-prof {
+      text-align: center;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #e5d8cc;
+      padding-bottom: 16px;
+    }
+
+
+    .header-prof h1 {
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: #3e2e24;
+      letter-spacing: 0.5px;
+    }
+
+
+    .header-prof .nombre {
+      font-weight: 600;
+      color: #6b4c3b;
+      background: #ede3d9;
+      display: inline-block;
+      padding: 4px 18px;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      margin-top: 6px;
+      letter-spacing: 0.3px;
+    }
+
+
+    .header-prof .especialidad {
+      font-size: 0.9rem;
+      color: #7a5f4b;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+
+    /* progreso */
+    .progress-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 22px;
+      background: #e8ddd2;
+      padding: 6px 14px 6px 18px;
+      border-radius: 60px;
+      font-size: 0.85rem;
+      color: #3e2e24;
+      font-weight: 500;
+    }
+
+
+    .progress-track {
+      flex: 1;
+      height: 6px;
+      background: #d0c0b2;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #a67c64;
+      border-radius: 12px;
+      transition: width 0.3s ease;
+    }
+
+
+    /* burbuja de pregunta */
+    .chat-bubble {
+      background: #ffffffdd;
+      backdrop-filter: blur(2px);
+      border-radius: 28px 28px 28px 8px;
+      padding: 24px 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      border: 1px solid #f0e4da;
+      transition: opacity 0.2s;
+    }
+
+
+    .chat-bubble .pregunta-num {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #b0917c;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+
+    .chat-bubble .pregunta-texto {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #2d2018;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+
+
+    .chat-bubble .pregunta-desc {
+      font-size: 0.95rem;
+      color: #5f4a3a;
+      margin-top: 4px;
+    }
+
+
+    /* opciones */
+    .opciones-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+
+    .opcion-btn {
+      background: #faf5f0;
+      border: 1.5px solid #e2d3c6;
+      border-radius: 60px;
+      padding: 14px 22px;
+      font-size: 1rem;
+      font-weight: 450;
+      color: #2d2018;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+
+    .opcion-btn:hover {
+      background: #f0e5db;
+      border-color: #b99a84;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
+    }
+
+
+    .opcion-btn:active {
+      transform: scale(0.98);
+      background: #e6d7ca;
+    }
+
+
+    .opcion-btn .letra {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      background: #e1d2c4;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 28px;
+      font-weight: 600;
+      color: #4d382a;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+
+    .opcion-btn .texto {
+      flex: 1;
+    }
+
+
+    /* resultado */
+    .resultado-box {
+      background: #e5d4c5;
+      border-radius: 32px;
+      padding: 24px 28px;
+      margin-top: 12px;
+      border-left: 8px solid #a67c64;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+
+    .resultado-box h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #2d1f16;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+
+    .resultado-box .recomendacion {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #2d1f16;
+    }
+
+
+    .resultado-box .tecnicas-sugeridas {
+      margin-top: 16px;
+      background: #f7efe8;
+      padding: 14px 20px;
+      border-radius: 40px;
+      font-weight: 500;
+      color: #4d3425;
+      display: inline-block;
+      font-size: 1rem;
+    }
+
+
+    .resultado-box .nota-legal {
+      margin-top: 18px;
+      font-size: 0.85rem;
+      color: #6f5a4a;
+      background: #f4e8de;
+      padding: 10px 16px;
+      border-radius: 40px;
+      border: 1px solid #dccbbc;
+    }
+
+
+    .btn-reiniciar {
+      margin-top: 20px;
+      background: #dccbbc;
+      border: none;
+      border-radius: 60px;
+      padding: 12px 28px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #2d1f16;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+      text-align: center;
+    }
+
+
+    .btn-reiniciar:hover {
+      background: #ccb7a4;
+    }
+
+
+    .hidden {
+      display: none !important;
+    }
+
+
+    .footer-legal {
+      margin-top: 24px;
+      font-size: 0.7rem;
+      text-align: center;
+      color: #9a8678;
+      border-top: 1px solid #e5d8cc;
+      padding-top: 16px;
+      letter-spacing: 0.3px;
+    }
+
+
+    @media (max-width: 480px) {
+      .app-container { padding: 20px 16px; }
+      .chat-bubble { padding: 18px 16px; }
+      .chat-bubble .pregunta-texto { font-size: 1.1rem; }
+      .opcion-btn { padding: 12px 16px; font-size: 0.95rem; }
+      .header-prof h1 { font-size: 1.1rem; }
+      .resultado-box { padding: 20px 16px; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="branding">
-            <h1>Giacinto Schiavone — Master LMT</h1>
-            <p class="subtitle">Terapias Corporales Ayurveda & Yoga</p>
+
+
+<div class="app-container" id="app">
+  <!-- Encabezado con nombre y especialidad -->
+  <div class="header-prof">
+    <h1>🌿 Centro de Bienestar · Texas</h1>
+    <div class="nombre">Giacinto Schiavone · Master LMT</div>
+    <div class="especialidad">profesional en terapias corporales de Ayurveda</div>
+  </div>
+
+
+  <!-- Barra de progreso -->
+  <div class="progress-bar" id="progressBar">
+    <span id="progresoTexto">Pregunta 1 de 15</span>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+    </div>
+  </div>
+
+
+  <!-- Contenedor dinámico: pregunta o resultado -->
+  <div id="contenedorDinamico">
+    <!-- Aquí se inyecta la pregunta o el resultado -->
+  </div>
+
+
+  <!-- pequeño aviso legal fijo -->
+  <div class="footer-legal">
+    Este formulario de bienestar ofrece sugerencias generales. No reemplaza la opinión de un profesional de la salud.
+  </div>
+</div>
+
+
+<script>
+  (function() {
+    // ----- DEFINICIÓN DE TÉCNICAS (índices) -----
+    const TECNICAS = ['Sueco', 'Deep Tissue', 'Deportivo', 'Tailandés', 'Ayurveda'];
+    // índices: 0=Sueco, 1=Deep, 2=Deportivo, 3=Tailandés, 4=Ayurveda
+
+
+    // ----- PREGUNTAS (15) -----
+    const preguntas = [
+      // 1. Objetivo principal
+      {
+        id: 1,
+        texto: '¿Cuál es tu objetivo principal para esta sesión de bienestar?',
+        opciones: [
+          { letra: 'A', texto: 'Relajarme y desconectar', puntajes: [3, 0, 0, 1, 2] },
+          { letra: 'B', texto: 'Recuperar energía', puntajes: [1, 0, 2, 1, 3] },
+          { letra: 'C', texto: 'Estiramiento y flexibilidad', puntajes: [0, 0, 2, 3, 1] },
+          { letra: 'D', texto: 'Balance holístico (cuerpo y mente)', puntajes: [2, 1, 0, 1, 3] }
+        ]
+      },
+      // 2. Presión
+      {
+        id: 2,
+        texto: '¿Qué tipo de presión prefieres durante el masaje?',
+        opciones: [
+          { letra: 'A', texto: 'Suave, como caricias', puntajes: [3, 0, 0, 0, 2] },
+          { letra: 'B', texto: 'Moderada, firme pero agradable', puntajes: [2, 2, 1, 1, 1] },
+          { letra: 'C', texto: 'Firme, que sienta la profundidad', puntajes: [0, 3, 2, 1, 0] },
+          { letra: 'D', texto: 'Muy profunda, para soltar nudos', puntajes: [0, 3, 1, 2, 0] }
+        ]
+      },
+      // 3. Texturas
+      {
+        id: 3,
+        texto: '¿Cómo prefieres que se realice la sesión en cuanto a texturas y productos?',
+        opciones: [
+          { letra: 'A', texto: 'Con aceites tradicionales (suaves y neutros)', puntajes: [2, 1, 0, 0, 1] },
+          { letra: 'B', texto: 'Con aceites herbales (con propiedades naturales)', puntajes: [1, 0, 0, 0, 3] },
+          { letra: 'C', texto: 'Con cremas hidratantes', puntajes: [2, 2, 1, 0, 0] },
+          { letra: 'D', texto: 'Prefiero sobre la ropa, con estiramientos', puntajes: [0, 0, 2, 3, 0] }
+        ]
+      },
+      // 4. Ritmo
+      {
+        id: 4,
+        texto: '¿Qué ritmo te acompaña mejor en la sesión?',
+        opciones: [
+          { letra: 'A', texto: 'Lento y pausado, para desconectar', puntajes: [3, 1, 0, 0, 2] },
+          { letra: 'B', texto: 'Dinámico y vigorizante, con movimiento', puntajes: [0, 1, 3, 2, 1] }
+        ]
+      },
+      // 5. Postura diaria
+      {
+        id: 5,
+        texto: '¿Cuál es tu postura principal durante el día?',
+        opciones: [
+          { letra: 'A', texto: 'Muchas horas sentado (oficina, escritorio)', puntajes: [2, 2, 0, 1, 1] },
+          { letra: 'B', texto: 'Mucho tiempo de pie', puntajes: [1, 2, 1, 1, 2] },
+          { letra: 'C', texto: 'Manejando o en movimiento constante', puntajes: [2, 1, 0, 1, 1] },
+          { letra: 'D', texto: 'Esfuerzo físico constante (carga, construcción, etc.)', puntajes: [0, 2, 3, 1, 1] }
+        ]
+      },
+      // 6. Actividad física
+      {
+        id: 6,
+        texto: '¿Cómo describirías tu nivel de actividad física?',
+        opciones: [
+          { letra: 'A', texto: 'Sedentario (poco movimiento)', puntajes: [3, 1, 0, 0, 2] },
+          { letra: 'B', texto: 'Ejercicio moderado (caminar, yoga, bicicleta)', puntajes: [2, 2, 1, 1, 1] },
+          { letra: 'C', texto: 'Entrenamiento de alta intensidad / atleta', puntajes: [0, 2, 3, 1, 1] }
+        ]
+      },
+      // 7. Descanso nocturno
+      {
+        id: 7,
+        texto: '¿Cómo es tu descanso nocturno?',
+        opciones: [
+          { letra: 'A', texto: 'Duermo profundamente y despierto renovado', puntajes: [2, 0, 0, 0, 2] },
+          { letra: 'B', texto: 'Me cuesta conciliar el sueño por tensión o estrés', puntajes: [3, 1, 0, 0, 2] },
+          { letra: 'C', texto: 'Me despierto con rigidez o molestias', puntajes: [1, 2, 1, 2, 1] }
+        ]
+      },
+      // 8. Manejo de tensiones
+      {
+        id: 8,
+        texto: '¿Cómo percibes tu nivel de tensión cotidiana?',
+        opciones: [
+          { letra: 'A', texto: 'Estrés mental alto (preocupaciones, ansiedad)', puntajes: [3, 1, 0, 0, 2] },
+          { letra: 'B', texto: 'Fatiga física (cuerpo cansado)', puntajes: [1, 2, 2, 1, 2] },
+          { letra: 'C', texto: 'Cansancio generalizado (mental y físico)', puntajes: [2, 1, 1, 0, 3] }
+        ]
+      },
+      // 9. Zona de tensión
+      {
+        id: 9,
+        texto: '¿Dónde sientes que se acumula más la tensión?',
+        opciones: [
+          { letra: 'A', texto: 'Cuello y hombros', puntajes: [2, 2, 0, 1, 1] },
+          { letra: 'B', texto: 'Espalda baja (zona lumbar)', puntajes: [1, 3, 1, 1, 1] },
+          { letra: 'C', texto: 'Piernas y pies', puntajes: [1, 1, 2, 2, 1] },
+          { letra: 'D', texto: 'Tensión general en todo el cuerpo', puntajes: [2, 2, 1, 1, 2] }
+        ]
+      },
+      // 10. Articulaciones
+      {
+        id: 10,
+        texto: '¿Cómo sientes tus articulaciones?',
+        opciones: [
+          { letra: 'A', texto: 'Rigidez al moverme', puntajes: [1, 2, 1, 2, 1] },
+          { letra: 'B', texto: 'Falta de flexibilidad o amplitud', puntajes: [0, 1, 2, 3, 1] },
+          { letra: 'C', texto: 'Rango de movimiento normal', puntajes: [2, 1, 0, 0, 2] }
+        ]
+      },
+      // 11. Sensibilidad piel / temperatura
+      {
+        id: 11,
+        texto: '¿Cómo es tu sensibilidad y temperatura corporal?',
+        opciones: [
+          { letra: 'A', texto: 'Suelo tener frío frecuentemente', puntajes: [2, 1, 0, 0, 3] },
+          { letra: 'B', texto: 'Suelo tener calor o sofocos', puntajes: [1, 1, 1, 2, 1] },
+          { letra: 'C', texto: 'Mi piel es muy sensible a la fricción', puntajes: [3, 0, 0, 0, 2] }
+        ]
+      },
+      // 12. Estimulación sensorial
+      {
+        id: 12,
+        texto: 'En cuanto al ambiente, ¿qué prefieres?',
+        opciones: [
+          { letra: 'A', texto: 'Silencio absoluto', puntajes: [2, 0, 0, 0, 1] },
+          { letra: 'B', texto: 'Música suave de fondo', puntajes: [2, 1, 0, 1, 2] },
+          { letra: 'C', texto: 'Aromas naturales específicos (lavanda, sándalo, etc.)', puntajes: [1, 0, 0, 0, 3] }
+        ]
+      },
+      // 13. Estado piernas
+      {
+        id: 13,
+        texto: '¿Cómo terminan tus piernas al final del día?',
+        opciones: [
+          { letra: 'A', texto: 'Sensación de pesadez o cansancio', puntajes: [2, 1, 1, 1, 2] },
+          { letra: 'B', texto: 'Fatiga por ejercicio o actividad', puntajes: [0, 1, 3, 1, 1] },
+          { letra: 'C', texto: 'Normales, sin molestias', puntajes: [2, 0, 0, 0, 2] }
+        ]
+      },
+      // 14. Energía actual
+      {
+        id: 14,
+        texto: '¿Cómo describirías tu nivel de energía hoy?',
+        opciones: [
+          { letra: 'A', texto: 'Agotado, necesito recargar', puntajes: [2, 0, 0, 0, 3] },
+          { letra: 'B', texto: 'Con energía, pero muy tensionado', puntajes: [2, 2, 1, 1, 1] }
+        ]
+      },
+      // 15. Última sesión
+      {
+        id: 15,
+        texto: '¿Cuánto tiempo ha pasado desde tu última sesión de bienestar corporal?',
+        opciones: [
+          { letra: 'A', texto: 'Menos de un mes', puntajes: [1, 1, 1, 1, 1] },
+          { letra: 'B', texto: 'Varios meses', puntajes: [2, 2, 1, 1, 2] },
+          { letra: 'C', texto: 'Es mi primera vez', puntajes: [3, 1, 0, 0, 2] }
+        ]
+      }
+    ];
+
+
+    // ----- ESTADO -----
+    let indiceActual = 0;
+    // acumulador de puntajes [Sueco, Deep, Depor, Thai, Ayur]
+    let acumulador = [0, 0, 0, 0, 0];
+    let respuestasElegidas = []; // guardar índice de opción para cada pregunta (opcional)
+
+
+    const contenedor = document.getElementById('contenedorDinamico');
+    const progresoTexto = document.getElementById('progresoTexto');
+    const progresoFill = document.getElementById('progressFill');
+
+
+    // ----- FUNCIONES AUXILIARES -----
+    function actualizarProgreso() {
+      const total = preguntas.length;
+      const actual = indiceActual + 1;
+      const pct = (indiceActual / total) * 100;
+      progresoTexto.textContent = `Pregunta ${actual} de ${total}`;
+      progresoFill.style.width = `${Math.min(pct, 100)}%`;
+    }
+
+
+    // Renderiza la pregunta actual
+    function renderPregunta() {
+      if (indiceActual >= preguntas.length) {
+        renderResultado();
+        return;
+      }
+
+
+      const p = preguntas[indiceActual];
+      let html = `
+        <div class="chat-bubble">
+          <div class="pregunta-num">Pregunta ${p.id} de ${preguntas.length}</div>
+          <div class="pregunta-texto">${p.texto}</div>
+          <div class="pregunta-desc">Elige una opción:</div>
         </div>
-        <button id="theme-toggle" aria-label="Cambiar tema">🌙</button>
-    </header>
+        <div class="opciones-grid">
+      `;
 
-    <main id="app">
-        <!-- El contenido se cargará dinámicamente -->
-    </main>
 
-    <nav id="bottom-nav">
-        <button data-view="clientes" class="nav-item active">
-            <span class="icon">👥</span>
-            <span class="label">Clientes</span>
-        </button>
-        <button data-view="consentimientos" class="nav-item">
-            <span class="icon">📄</span>
-            <span class="label">Consentimientos</span>
-        </button>
-        <button data-view="soap" class="nav-item">
-            <span class="icon">📝</span>
-            <span class="label">Notas SOAP</span>
-        </button>
-        <button data-view="ajustes" class="nav-item">
-            <span class="icon">⚙️</span>
-            <span class="label">Ajustes</span>
-        </button>
-    </nav>
+      p.opciones.forEach((op, idx) => {
+        html += `
+          <button class="opcion-btn" data-indice="${idx}" data-pregunta="${p.id}">
+            <span class="letra">${op.letra}</span>
+            <span class="texto">${op.texto}</span>
+          </button>
+        `;
+      });
 
-    <!-- Botón Flotante WhatsApp - Siempre visible -->
-    <button id="fab-whatsapp" aria-label="Enviar consentimiento por WhatsApp" title="Enviar consentimiento por WhatsApp">
-        <span class="fab-icon">📱</span>
-        <span class="fab-label">WhatsApp</span>
-    </button>
 
-    <script type="module" src="js/app.js"></script>
+      html += `</div>`;
+      contenedor.innerHTML = html;
+
+
+      // Asignar eventos a los botones
+      document.querySelectorAll('.opcion-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          const idxOpcion = parseInt(this.dataset.indice);
+          const preguntaId = parseInt(this.dataset.pregunta);
+          // Buscar la pregunta actual (por si acaso)
+          const preguntaActual = preguntas[indiceActual];
+          if (preguntaActual.id !== preguntaId) return;
+
+
+          // Sumar puntajes
+          const puntajes = preguntaActual.opciones[idxOpcion].puntajes;
+          for (let i = 0; i < puntajes.length; i++) {
+            acumulador[i] += puntajes[i];
+          }
+          respuestasElegidas.push(idxOpcion);
+
+
+          // Avanzar
+          indiceActual++;
+          actualizarProgreso();
+          renderPregunta();
+        });
+      });
+
+
+      actualizarProgreso();
+    }
+
+
+    // ----- RESULTADO FINAL -----
+    function renderResultado() {
+      // Calcular las 2 o 3 técnicas con mayor puntaje
+      // Crear array de pares [nombre, puntaje]
+      const puntajes = TECNICAS.map((nombre, i) => ({ nombre, puntaje: acumulador[i] }));
+      puntajes.sort((a, b) => b.puntaje - a.puntaje);
+
+
+      // Tomar las 2 primeras; si la tercera tiene puntaje muy cercano (diferencia <= 1) incluirla
+      const seleccionadas = [];
+      seleccionadas.push(puntajes[0]);
+      if (puntajes.length > 1) seleccionadas.push(puntajes[1]);
+      // Verificar tercera si existe y su puntaje es >= 80% del primer puntaje (o diferencia <= 2)
+      if (puntajes.length > 2) {
+        const diff = puntajes[0].puntaje - puntajes[2].puntaje;
+        if (diff <= 2 && puntajes[2].puntaje > 0) {
+          seleccionadas.push(puntajes[2]);
+        }
+      }
+
+
+      // Si hay empate en el primer lugar, incluir más
+      // Pero ya tenemos al menos 2.
+
+
+      // Construir texto de técnicas
+      const nombresTecnicas = seleccionadas.map(item => item.nombre);
+      let tecnicasStr = '';
+      if (nombresTecnicas.length === 1) {
+        tecnicasStr = nombresTecnicas[0];
+      } else if (nombresTecnicas.length === 2) {
+        tecnicasStr = nombresTecnicas.join(' y ');
+      } else {
+        tecnicasStr = nombresTecnicas.slice(0, -1).join(', ') + ' y ' + nombresTecnicas[nombresTecnicas.length - 1];
+      }
+
+
+      // Generar una justificación personalizada (simple)
+      const justificacion = generarJustificacion(seleccionadas);
+
+
+      // Mensaje de bienvenida y resultado
+      const html = `
+        <div class="resultado-box">
+          <h2>🧘 Tu recomendación personalizada</h2>
+          <div class="recomendacion">
+            <p>Basado en tus hábitos y preferencias, te sugerimos una sesión que integre <strong>${tecnicasStr}</strong>.</p>
+            <p style="margin-top: 12px;">${justificacion}</p>
+          </div>
+          <div class="tecnicas-sugeridas">
+            ✦ Técnicas sugeridas: ${tecnicasStr}
+          </div>
+          <div class="nota-legal">
+            ⚕️ Esta es una sugerencia de bienestar general. Si tienes una condición de salud específica, consulta con tu proveedor de salud antes de la sesión.
+          </div>
+          <button class="btn-reiniciar" id="btnReiniciar">↻ Iniciar nuevo cuestionario</button>
+        </div>
+      `;
+      contenedor.innerHTML = html;
+
+
+      // Evento reiniciar
+      document.getElementById('btnReiniciar').addEventListener('click', function() {
+        reiniciarCuestionario();
+      });
+
+
+      // Ocultar barra de progreso? No, pero actualizar a 100%
+      progresoTexto.textContent = '¡Cuestionario completado!';
+      progresoFill.style.width = '100%';
+    }
+
+
+    // Genera justificación según las técnicas seleccionadas y las puntuaciones
+    function generarJustificacion(seleccionadas) {
+      const nombres = seleccionadas.map(s => s.nombre);
+      let texto = '';
+
+
+      // Frases según combinaciones
+      const tiene = (nombre) => nombres.includes(nombre);
+
+
+      if (tiene('Sueco') && tiene('Ayurveda')) {
+        texto = 'La combinación de masaje sueco y terapias ayurvédicas favorece una relajación profunda, alivia tensiones acumuladas y restaura el equilibrio energético. Ideal para quienes buscan desconectar y recargar cuerpo y mente.';
+      } else if (tiene('Deep Tissue') && tiene('Deportivo')) {
+        texto = 'El masaje de tejido profundo junto con técnicas deportivas ayuda a liberar contracturas musculares, mejora la recuperación y aumenta la flexibilidad. Perfecto para quienes tienen una vida activa o acumulan tensión en zonas específicas.';
+      } else if (tiene('Tailandés') && tiene('Deportivo')) {
+        texto = 'La combinación de estiramientos tailandeses y masaje deportivo favorece la amplitud de movimiento, alivia la rigidez articular y revitaliza el cuerpo. Recomendado para quienes necesitan flexibilidad y energía.';
+      } else if (tiene('Sueco') && tiene('Deep Tissue')) {
+        texto = 'Esta mezcla equilibra la relajación superficial con el trabajo profundo en nudos musculares. Alivia el estrés y la tensión crónica, dejando una sensación de ligereza y bienestar duradero.';
+      } else if (tiene('Ayurveda') && tiene('Tailandés')) {
+        texto = 'La fusión de la sabiduría ayurvédica con los estiramientos tailandeses ofrece una experiencia integral: armoniza los doshas, mejora la circulación y libera bloqueos energéticos, ideal para un equilibrio holístico.';
+      } else if (tiene('Ayurveda') && tiene('Deep Tissue')) {
+        texto = 'Esta combinación trata la tensión profunda desde una perspectiva energética y estructural. Los aceites herbales ayurvédicos potencian la liberación muscular, mientras el trabajo profundo deshace nudos.';
+      } else if (tiene('Sueco') && tiene('Deportivo')) {
+        texto = 'Un enfoque que alterna movimientos suaves y rítmicos con técnicas más activas, ideal para mantener la movilidad, reducir la fatiga y promover una recuperación equilibrada.';
+      } else if (tiene('Tailandés') && tiene('Sueco')) {
+        texto = 'La calidez del masaje sueco y la elasticidad del tailandés se complementan para ofrecer una sesión que relaja, estira y renueva, especialmente beneficiosa para quienes pasan muchas horas en la misma postura.';
+      } else if (tiene('Deportivo') && tiene('Ayurveda')) {
+        texto = 'Una propuesta que combina la eficacia del masaje deportivo con los principios ayurvédicos: recuperación muscular, reducción de la fatiga y fortalecimiento del sistema nervioso.';
+      } else if (seleccionadas.length === 1) {
+        const nombre = seleccionadas[0].nombre;
+        if (nombre === 'Sueco') texto = 'El masaje sueco es ideal para una relajación profunda, mejora la circulación y reduce el estrés. Perfecto para quienes buscan calma y bienestar general.';
+        else if (nombre === 'Deep Tissue') texto = 'El masaje de tejido profundo se enfoca en capas musculares más internas, liberando tensiones crónicas y mejorando la postura. Muy efectivo para molestias localizadas.';
+        else if (nombre === 'Deportivo') texto = 'El masaje deportivo está diseñado para optimizar el rendimiento, prevenir lesiones y acelerar la recuperación. Ideal para personas activas o con exigencias físicas.';
+        else if (nombre === 'Tailandés') texto = 'El masaje tailandés combina estiramientos asistidos y presión rítmica para aumentar la flexibilidad, aliviar la rigidez y equilibrar la energía corporal.';
+        else if (nombre === 'Ayurveda') texto = 'Las terapias corporales ayurvédicas utilizan aceites herbales y movimientos específicos para armonizar los doshas, revitalizar el cuerpo y calmar la mente.';
+      } else {
+        // fallback
+        texto = 'Basado en tus respuestas, seleccionamos una combinación personalizada que aborda tus necesidades específicas de bienestar, relajación y equilibrio corporal.';
+      }
+
+
+      // Agregar frase sobre el estilo de vida
+      texto += ' Esta sugerencia se adapta a tus hábitos cotidianos y preferencias de presión, ritmo y textura.';
+
+
+      return texto;
+    }
+
+
+    // Reiniciar
+    function reiniciarCuestionario() {
+      indiceActual = 0;
+      acumulador = [0, 0, 0, 0, 0];
+      respuestasElegidas = [];
+      renderPregunta();
+      actualizarProgreso();
+    }
+
+
+    // ----- INICIO -----
+    renderPregunta();
+
+
+  })();
+</script>
 </body>
 </html>
